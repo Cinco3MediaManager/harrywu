@@ -1,24 +1,20 @@
+// Emulates user account functions
+// functions so far: create account, login
 package net.sqliteconnection.main;
 
 import net.sqliteconnection.connection.UserDB;
-import net.sqliteconnection.controller.UserController;
 import net.sqliteconnection.model.User;
-import net.sqliteconnection.view.UserView;
 
 public class CreateUserAccount {
 	public static void main(String[] args) {
 		UserDB userClient = new UserDB();
 		User model = retrieveUserFromDataBase();
-		UserView view = new UserView();
-		UserController controller = new UserController(model, view);
-		// controller used for hashmap demo
-		// userClient used to store info in to the sql table
-		userClient.storeUser(model.getUsername(), model.getInformation());
+		userClient.storeUser(model.getUsername(), model.getInformation()); // store account variables to database
+		userClient.login("newuser", "password"); // can replace these variables with model variables
 	}
-	private static User retrieveUserFromDataBase() {
+	private static User retrieveUserFromDataBase() { // create test account
 		User user = new User();
-		user.setUsername("Pinco");
-		user.setInformation("username", "password", "Hello", "Three", "53 Cinco Three Street", "CincoThree@cincothree.com");
+		user.setInformation("newuser", "password", "Hello", "Three", "53 Cinco Three Street", "CincoThree@cincothree.com");
 		// Information in order: Username, Password, First Name, Last Name, Address, Email
 		user.storeDataBase(user.getUsername(), user.getInformation());
 		return user;
